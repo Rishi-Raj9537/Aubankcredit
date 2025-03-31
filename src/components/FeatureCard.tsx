@@ -8,13 +8,15 @@ interface FeatureCardProps {
   title: string;
   onClick?: () => void;
   className?: string;
+  iconClassName?: string;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
   icon: Icon,
   title,
   onClick,
-  className
+  className,
+  iconClassName
 }) => {
   return (
     <div 
@@ -24,7 +26,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       )}
       onClick={onClick}
     >
-      <Icon className="h-6 w-6 mb-2 text-finance-blue" />
+      <Icon className={cn("h-6 w-6 mb-2 text-finance-blue", iconClassName)} />
       <span className="text-sm font-medium text-center">{title}</span>
     </div>
   );

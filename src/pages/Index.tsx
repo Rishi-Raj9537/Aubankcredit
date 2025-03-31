@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slide from '@/components/Slide';
 import SlideNavigation from '@/components/SlideNavigation';
 import CreditCard from '@/components/CreditCard';
@@ -66,6 +68,7 @@ const transactions = [
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = 4;
+  const navigate = useNavigate();
 
   const goToNextSlide = () => {
     if (currentSlide < totalSlides - 1) {
@@ -77,6 +80,10 @@ const Index = () => {
     if (currentSlide > 0) {
       setCurrentSlide(currentSlide - 1);
     }
+  };
+
+  const goToRewards = () => {
+    navigate('/rewards');
   };
 
   return (
@@ -186,16 +193,16 @@ const Index = () => {
               <div className="mt-4 grid grid-cols-3 gap-4">
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-xs text-gray-500">Current Balance</p>
-                  <p className="text-xl font-bold text-finance-red">$1,245.50</p>
+                  <p className="text-xl font-bold text-finance-red">₹1,245.50</p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-xs text-gray-500">Available Credit</p>
-                  <p className="text-xl font-bold text-finance-green">$3,754.50</p>
+                  <p className="text-xl font-bold text-finance-green">₹3,754.50</p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded-lg">
                   <p className="text-xs text-gray-500">Payment Due</p>
                   <div className="flex justify-between items-center">
-                    <p className="text-xl font-bold text-finance-blue">$250.00</p>
+                    <p className="text-xl font-bold text-finance-blue">₹250.00</p>
                     <p className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">15 Aug</p>
                   </div>
                 </div>
@@ -206,10 +213,26 @@ const Index = () => {
             <div className="mb-8">
               <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
               <div className="grid grid-cols-4 md:grid-cols-4 gap-4">
-                <FeatureCard icon={DollarSign} title="Pay Bill" />
-                <FeatureCard icon={LockKeyhole} title="Lock Card" />
-                <FeatureCard icon={Receipt} title="Statements" />
-                <FeatureCard icon={ArrowLeftRight} title="Transfer" />
+                <FeatureCard 
+                  icon={DollarSign} 
+                  title="Pay Bill" 
+                  iconClassName="text-purple-600"
+                />
+                <FeatureCard 
+                  icon={LockKeyhole} 
+                  title="Lock Card" 
+                  iconClassName="text-purple-700"
+                />
+                <FeatureCard 
+                  icon={Receipt} 
+                  title="Statements" 
+                  iconClassName="text-purple-800"
+                />
+                <FeatureCard 
+                  icon={ArrowLeftRight} 
+                  title="Transfer" 
+                  iconClassName="text-purple-900"
+                />
               </div>
             </div>
             
@@ -230,8 +253,8 @@ const Index = () => {
                   <FileText className="h-6 w-6 text-gray-400" />
                   <span className="text-xs mt-1">Activity</span>
                 </div>
-                <div className="flex flex-col items-center">
-                  <PiggyBank className="h-6 w-6 text-gray-400" />
+                <div className="flex flex-col items-center" onClick={goToRewards}>
+                  <PiggyBank className="h-6 w-6 text-purple-600" />
                   <span className="text-xs mt-1">Rewards</span>
                 </div>
                 <div className="flex flex-col items-center">
