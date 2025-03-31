@@ -1,12 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Slide from '@/components/Slide';
 import CreditCard from '@/components/CreditCard';
 import SpendingChart from '@/components/SpendingChart';
 import TransactionList from '@/components/TransactionList';
 import QuickActions from '@/components/QuickActions';
+import FunctionalityFeatures from '@/components/FunctionalityFeatures';
+import FeatureDetails, { FeatureDetailProps } from '@/components/FeatureDetails';
 import { Bell, CreditCard as CreditCardIcon, FileText, PiggyBank, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface DashboardProps {
   spendingData: Array<{
@@ -25,22 +28,50 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ spendingData, transactions }) => {
   const navigate = useNavigate();
+  const [selectedFeature, setSelectedFeature] = useState<FeatureDetailProps | null>(null);
+  const [showFeatureDetails, setShowFeatureDetails] = useState(false);
+  const [showFunctionalities, setShowFunctionalities] = useState(false);
   
   const goToRewards = () => {
     navigate('/rewards');
   };
 
+  const handleFeatureClick = (feature: FeatureDetailProps) => {
+    setSelectedFeature(feature);
+    setShowFeatureDetails(true);
+  };
+
+  const toggleFunctionalities = () => {
+    setShowFunctionalities(!showFunctionalities);
+  };
+
   return (
     <Slide title="Dashboard Wireframe - Main View">
       <div className="bg-white rounded-xl p-6 shadow-lg max-w-4xl mx-auto">
-        {/* Header with notifications */}
+        {/* Header with notifications and Explore Features button */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">My Credit Card</h2>
-          <div className="relative">
-            <Bell className="h-6 w-6 text-gray-500" />
-            <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">3</span>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              onClick={toggleFunctionalities}
+              className="text-finance-blue border-finance-blue hover:bg-finance-blue/10"
+            >
+              {showFunctionalities ? "Hide Features" : "Explore Features"}
+            </Button>
+            <div className="relative">
+              <Bell className="h-6 w-6 text-gray-500" />
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs">3</span>
+            </div>
           </div>
         </div>
+        
+        {/* Features section (conditionally rendered) */}
+        {showFunctionalities && (
+          <div className="mb-8">
+            <FunctionalityFeatures onFeatureClick={handleFeatureClick} />
+          </div>
+        )}
         
         {/* Card section */}
         <div className="mb-8">
@@ -79,6 +110,13 @@ const Dashboard: React.FC<DashboardProps> = ({ spendingData, transactions }) => 
           <SpendingChart data={spendingData} />
           <TransactionList transactions={transactions} />
         </div>
+        
+        {/* Feature details dialog */}
+        <FeatureDetails 
+          isOpen={showFeatureDetails} 
+          onClose={() => setShowFeatureDetails(false)} 
+          feature={selectedFeature}
+        />
         
         {/* Bottom navigation (mobile) */}
         <MobileNavigation goToRewards={goToRewards} />
