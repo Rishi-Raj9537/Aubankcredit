@@ -35,6 +35,10 @@ const Dashboard: React.FC<DashboardProps> = ({ spendingData, transactions }) => 
   const goToRewards = () => {
     navigate('/rewards');
   };
+  
+  const goToRewardManagementDetail = () => {
+    navigate('/reward-management-detail');
+  };
 
   const handleFeatureClick = (feature: FeatureDetailProps) => {
     setSelectedFeature(feature);
@@ -119,19 +123,33 @@ const Dashboard: React.FC<DashboardProps> = ({ spendingData, transactions }) => 
         />
         
         {/* Bottom navigation (mobile) */}
-        <MobileNavigation goToRewards={goToRewards} />
+        <MobileNavigation 
+          goToRewards={goToRewards}
+          goToRewardManagementDetail={goToRewardManagementDetail}
+        />
       </div>
     </Slide>
   );
 };
 
-const MobileNavigation = ({ goToRewards }: { goToRewards: () => void }) => {
+const MobileNavigation = ({ 
+  goToRewards,
+  goToRewardManagementDetail
+}: { 
+  goToRewards: () => void;
+  goToRewardManagementDetail: () => void;
+}) => {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-2">
       <div className="flex justify-around">
         <NavItem icon={CreditCardIcon} label="Cards" active />
         <NavItem icon={FileText} label="Activity" />
-        <NavItem icon={PiggyBank} label="Rewards" onClick={goToRewards} iconColor="text-purple-600" />
+        <NavItem 
+          icon={PiggyBank} 
+          label="Rewards" 
+          onClick={goToRewards} 
+          iconColor="text-purple-600" 
+        />
         <NavItem icon={Send} label="Payments" />
       </div>
     </div>
@@ -152,7 +170,7 @@ const NavItem = ({
   iconColor?: string;
 }) => {
   return (
-    <div className="flex flex-col items-center" onClick={onClick}>
+    <div className="flex flex-col items-center cursor-pointer" onClick={onClick}>
       <Icon className={`h-6 w-6 ${active ? 'text-finance-blue' : iconColor}`} />
       <span className="text-xs mt-1">{label}</span>
     </div>

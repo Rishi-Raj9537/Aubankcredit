@@ -3,6 +3,7 @@ import React from 'react';
 import FeatureCard from '@/components/FeatureCard';
 import { CreditCard, FileText, ShieldCheck, Zap, Award, BarChart4, Settings, HeadphonesIcon } from 'lucide-react';
 import { FeatureDetailProps } from '@/components/FeatureDetails';
+import { useNavigate } from 'react-router-dom';
 
 interface FunctionalityFeaturesProps {
   onFeatureClick: (feature: FeatureDetailProps) => void;
@@ -92,6 +93,16 @@ export const secondaryFeatures: FeatureDetailProps[] = [
 ];
 
 const FunctionalityFeatures: React.FC<FunctionalityFeaturesProps> = ({ onFeatureClick }) => {
+  const navigate = useNavigate();
+  
+  const handleFeatureClick = (feature: FeatureDetailProps) => {
+    if (feature.title === "Rewards Management") {
+      navigate('/rewards');
+    } else {
+      onFeatureClick(feature);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -117,7 +128,7 @@ const FunctionalityFeatures: React.FC<FunctionalityFeaturesProps> = ({ onFeature
               key={feature.title}
               icon={feature.icon}
               title={feature.title}
-              onClick={() => onFeatureClick(feature)}
+              onClick={() => handleFeatureClick(feature)}
               iconClassName="text-purple-600"
             />
           ))}

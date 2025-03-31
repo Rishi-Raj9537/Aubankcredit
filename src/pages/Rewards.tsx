@@ -9,7 +9,8 @@ import {
   Clock, 
   Banknote, 
   Tag,
-  Coins
+  Coins,
+  BarChart4
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -56,6 +57,10 @@ const redeemOptions = [
 const Rewards = () => {
   const navigate = useNavigate();
   
+  const handleViewRewardDetails = (merchant = '') => {
+    navigate('/reward-management-detail', { state: { merchant } });
+  };
+  
   return (
     <div className="bg-gray-50 min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
@@ -98,6 +103,14 @@ const Rewards = () => {
                 <Progress value={20} className="h-2 bg-white/20" />
                 <p className="text-xs text-white/80">Expiring on 31 Dec 2023</p>
               </div>
+
+              <Button 
+                onClick={() => handleViewRewardDetails()}
+                className="w-full mt-4 bg-white/20 hover:bg-white/30 flex items-center justify-center"
+              >
+                <BarChart4 className="h-4 w-4 mr-2" />
+                View Detailed Analysis
+              </Button>
             </CardContent>
           </Card>
           
@@ -181,7 +194,8 @@ const Rewards = () => {
               {offers.map(offer => (
                 <div 
                   key={offer.id}
-                  className="flex items-start justify-between p-4 border rounded-lg hover:border-purple-200 transition-colors"
+                  className="flex items-start justify-between p-4 border rounded-lg hover:border-purple-200 transition-colors cursor-pointer"
+                  onClick={() => handleViewRewardDetails(offer.merchant)}
                 >
                   <div className="flex">
                     <div className="bg-purple-100 rounded-full p-3 mr-3">
