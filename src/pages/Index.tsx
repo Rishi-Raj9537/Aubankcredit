@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Slide from '@/components/Slide';
 import SlideNavigation from '@/components/SlideNavigation';
@@ -20,7 +19,8 @@ import {
   ShieldCheck,
   TrendingUp,
   Zap,
-  Send
+  Send,
+  Home as HomeIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -358,7 +358,7 @@ const Index = () => {
                   <ul className="mt-2 space-y-3">
                     <li className="flex items-center">
                       <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-2">
-                        <Home className="h-4 w-4 text-white" />
+                        <HomeIcon className="h-4 w-4 text-white" />
                       </div>
                       <span>Home Equity Line of Credit</span>
                     </li>
